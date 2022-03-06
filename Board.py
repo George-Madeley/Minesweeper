@@ -1,11 +1,10 @@
 from random import randint
-from re import L
 from Tile import Tile
 
 
 class Board:
     def __init__(self, sizeX: int, sizeY: int, maxBombs: int) -> None:
-        self.__2DTileArray = [[Tile() for x in range(sizeX)] for y in range(sizeY)]
+        self.__2DTileArray = [[Tile(x,y) for x in range(sizeX)] for y in range(sizeY)]
         self.__sizeX = sizeX
         self.__sizeY = sizeY
         self.GenerateBombs(maxBombs)
@@ -17,7 +16,7 @@ class Board:
 
         boardString = ""
         for index, tileArray in enumerate(self.__2DTileArray):
-            boardString += f"str(index)\t"
+            boardString += f"{str(index)}\t"
             for tile in  tileArray:
                 boardString += str(f" {str(tile)} ")
             boardString += "\n"
@@ -34,8 +33,8 @@ class Board:
 
         bombsGenerated = int(maxBombs)
         while bombsGenerated > 0:
-            x = randint(self.__sizeX)
-            y = randint(self.__sizeY)
+            x = randint(0, self.__sizeX)
+            y = randint(0, self.__sizeY)
             try:
                 bombTile: Tile = self.__2DTileArray[y][x]
                 if bombTile.IsBomb():
@@ -77,23 +76,23 @@ class Board:
             True if the tile was a bomb.
         """
 
-        selectedTile: Tile = self.__2DTileArray[y][x]
+        selectedTile = self.__2DTileArray[y][x]
         selectedTile.SetExplored()
         if selectedTile.IsBomb():
             return True
         elif selectedTile.GetNumber() > 0:
             return False
         else:
-            childTiles: list[Tile] = [selectedTile]
+            childTiles = [selectedTile]
             while childTiles:
                 # Get first tile in list.
                 parentTile = childTiles.pop(0)
-                parentCoords: tuple(int) = parentTile.GetCoordinate()
+                parentCoords = parentTile.GetCoordinate()
                 children = self.__GetChildren(parentCoords)
                 childTiles.extend(children)
             return False
 
-    def __GetChildren(self, parentCoords: tuple(int)) -> list[Tile]:
+    def __GetChildren(self, parentCoords: any) -> any:
         """
         Reveals all of the surround tiles and returns the ones that are empty.
         

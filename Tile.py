@@ -88,7 +88,7 @@ class Tile:
 
         self.__isExplored = True
 
-    def GetCoordinate(self) -> tuple(int):
+    def GetCoordinate(self) -> any:
         """
         Gets the coordinate of the tile.
         
