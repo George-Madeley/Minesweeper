@@ -9,9 +9,14 @@ def main():
     gameOver = False
     while not gameOver:
         print(board)
+        placeFlag = str(input("Place flag (Y/N):\t")).lower() == "y"
         x = int(input("Enter X:\t"))
         y = int(input("Enter y:\t"))
-        gameOver = board.RevealTiles(x, y)
+        if placeFlag:
+            board.PlaceFlag(x, y)
+            gameOver = board.AreAllBombsFound()
+        else:
+            gameOver = board.RevealTiles(x, y) or board.AreAllBombsFound()
     print(board)
 
 if __name__ == "__main__":
